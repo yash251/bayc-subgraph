@@ -1,0 +1,31 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+description: A subgraph to index data on the Bored Apes contract
+features:
+  - ipfsOnEthereumContracts
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: BAYC
+    network: mainnet
+    source:
+      address: "0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D"
+      abi: BAYC
+      startBlock: 12287507
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+        - BoredApe
+        - Property
+      abis:
+        - name: BAYC
+          file: BAYC/abis/BAYC.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: BAYC/BAYC.wasm
